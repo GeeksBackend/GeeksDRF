@@ -32,3 +32,47 @@ class Post(models.Model):
     class Meta:
         verbose_name = "Пост"
         verbose_name_plural = "Посты"
+
+class PostLike(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        related_name='users_likes',
+        verbose_name='Пользователь'
+    )
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE,
+        related_name='posts_likes'
+    )
+
+    def __str__(self):
+        return f"{self.user} {self.post}"
+    
+    class Meta:
+        verbose_name = 'Лайки с посту'
+        verbose_name_plural = 'Лайки с постам'
+
+class PostComment(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        related_name='user_comments',
+        verbose_name='Пользователь'
+    )
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE,
+        related_name='post_comments',
+    )
+    text = models.CharField(
+        max_length=300,
+        verbose_name='Текст'
+    )
+    created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Дата создания'
+    )
+
+    def __str__(self):
+        return f"{self.user} {self.post}"
+    
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
