@@ -44,10 +44,19 @@ INSTALLED_APPS = [
     #rest
     'rest_framework',
 
+    #docs
+    'drf_yasg',
+
     #apps
     'apps.posts',
     'apps.users',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
