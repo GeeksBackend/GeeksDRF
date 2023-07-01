@@ -3,7 +3,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from apps.posts.models import Post, PostLike, PostComment
-from apps.posts.serializers import PostSerializer, PostLikeSerializer, PostCommentSerializer
+from apps.posts.serializers import PostSerializer, PostLikeSerializer, PostCommentSerializer, PostDetailSerializer
 from apps.posts.permissions import PostPermission
 
 # Create your views here.
@@ -24,6 +24,11 @@ class PostAPIViewSet(GenericViewSet,
         if self.action in ('update', 'partial_update', 'destroy'):
             return (PostPermission(), )
         return (AllowAny(), )
+    
+    def get_serializer_class(self):
+        if self.action in ('retrieve', ):
+            return PostDetailSerializer
+        return PostSerializer
     
 class PostLikeAPIViewSet(GenericViewSet,
                          mixins.CreateModelMixin,

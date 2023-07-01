@@ -3,7 +3,7 @@ from rest_framework import mixins
 from rest_framework.permissions import AllowAny
 
 from apps.users.models import User 
-from apps.users.serializers import UserSerializer, UserRegisterSerializer
+from apps.users.serializers import UserSerializer, UserRegisterSerializer, UserDetailSerializer
 from apps.users.permissions import UserPermission
 
 # Create your views here.
@@ -19,6 +19,8 @@ class UserAPIViewSet(GenericViewSet,
     def get_serializer_class(self):
         if self.action in ('create', ):
             return UserRegisterSerializer
+        if self.action in ('retrieve', ):
+            return UserDetailSerializer
         return UserSerializer
     
     def get_permissions(self):
